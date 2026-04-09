@@ -22,6 +22,8 @@ echo ""
 
 # ── Step 1: Install dependencies ──
 echo "[1/5] Installing dependencies..."
+# Install ONNX deps explicitly first (Lightning.ai's uv has cache issues with auto-install)
+pip install -q onnx onnxslim onnxruntime 2>/dev/null || pip install --break-system-packages -q onnx onnxslim onnxruntime 2>/dev/null || true
 pip install -q ultralytics mrcfile opencv-python-headless numpy Pillow 2>/dev/null
 # RF-DETR (optional, skip if not needed)
 pip install -q rfdetr 2>/dev/null || echo "  Note: rfdetr not installed (install manually for RF-DETR training)"
