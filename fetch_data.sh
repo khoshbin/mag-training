@@ -26,8 +26,15 @@ fi
 
 echo "Extracting..."
 mkdir -p "${DATA_DIR}"
-tar xzf "${TARBALL}" -C "${DATA_DIR}"
+tar xzf "${TARBALL}" --no-same-owner -C "${DATA_DIR}" 2>/dev/null || tar xzf "${TARBALL}" -C "${DATA_DIR}"
 rm -f "${TARBALL}"
+
+# Fix: tar may create a nested directory (10017/10017/) — flatten it
+if [ -d "${DATA_DIR}/${EMPIAR_ID}/micrographs" ]; then
+    echo "Fixing nested directory..."
+    mv "${DATA_DIR}/${EMPIAR_ID}"/* "${DATA_DIR}/"
+    rmdir "${DATA_DIR}/${EMPIAR_ID}"
+fi
 
 MICS=$(find "${DATA_DIR}" -type f \( -name "*.mrc" -o -name "*.jpg" \) | wc -l)
 COORDS=$(find "${DATA_DIR}" -type f -name "*.csv" | wc -l)
