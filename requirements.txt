@@ -1,0 +1,20 @@
+# CryoPPP ML training dependencies
+# Install: pip install -r training/requirements.txt
+
+# Core ML framework
+ultralytics>=8.3.0     # RT-DETR, YOLOv11, ONNX export
+
+# Image handling (for MRC conversion)
+Pillow>=10.0
+numpy>=1.24
+
+# ONNX export & validation
+onnx>=1.15
+onnxruntime>=1.17       # CPU validation
+# onnxruntime-gpu>=1.17 # Uncomment for GPU inference testing
+
+# Optional: for reading MRC files in Python
+mrcfile>=1.5
+
+# Optional: for advanced augmentations
+# albumentations>=1.4
